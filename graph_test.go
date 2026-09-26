@@ -83,23 +83,12 @@ func TestAddDependency(t *testing.T) {
 	}
 }
 
-// newTestGraph - test-lər üçün standart graph yaradır.
-//
-// Niyə helper?
-//   - Hər test-də eyni setup-u təkrarlamamaq üçün.
-//   - Bir yerdə dəyişiklik etmək kifayətdir.
-//
-// `t.Helper()` - bu funksiyanın test helper olduğunu bildirir.
-// Xəta baş verərsə, stack trace-də helper-in sətri DEYİL,
-// onu çağıran sətr göstərilir. Debug üçün vacibdir.
-
 /*
 func newTestGraph(t *testing.T) *Graph {
     t.Helper() // bunu mütləq çağır!
 
     g := NewGraph()
 
-    // Stage 0-dakı standart nümunə:
     //   A → B, A → C, B → D, C → D
     for _, name := range []PackageName{"A", "B", "C", "D"} {
         if err := g.AddPackage(name); err != nil {
@@ -123,22 +112,11 @@ func newTestGraph(t *testing.T) *Graph {
 }
 */
 
-// newTestGraph - test-lər üçün standart graph yaradır.
-//
-// Niyə helper?
-//   - Hər test-də eyni setup-u təkrarlamamaq üçün.
-//   - Bir yerdə dəyişiklik etmək kifayətdir.
-//
-// `t.Helper()` - bu funksiyanın test helper olduğunu bildirir.
-// Xəta baş verərsə, stack trace-də helper-in sətri DEYİL,
-// onu çağıran sətr göstərilir. Debug üçün vacibdir.
 func newTestGraph(t *testing.T) *Graph {
-	t.Helper() // bunu mütləq çağır!
+	t.Helper()
 
 	g := NewGraph()
 
-	// Stage 0-dakı standart nümunə:
-	//   A → B, A → C, B → D, C → D
 	for _, name := range []PackageName{"A", "B", "C", "D"} {
 		if err := g.AddPackage(name); err != nil {
 			t.Fatalf("AddPackage(%q) xəta: %v", name, err)
@@ -160,12 +138,6 @@ func newTestGraph(t *testing.T) *Graph {
 	return g
 }
 
-// assertEqualPackageSlices - iki PackageName slice-ini müqayisə edir.
-//
-// Niyə helper?
-//   - `reflect.DeepEqual` birbaşa istifadə etmək olar, lakin
-//     xəta mesajı oxunaqlı olmaz.
-//   - Helper ilə hər iki slice-i göstəririk.
 func assertEqualPackageSlices(t *testing.T, got, want []PackageName) {
 	t.Helper()
 
@@ -277,7 +249,7 @@ func TestCycleDetection(t *testing.T) {
 		name      string
 		setup     func(t *testing.T) *Graph
 		target    PackageName
-		wantCycle []PackageName // gözlənilən cycle yolu
+		wantCycle []PackageName 
 	}{
 		{
 			name: "self-loop",
